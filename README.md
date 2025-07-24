@@ -7,7 +7,7 @@ Also check out the [gitignore.io](https://www.toptal.com/developers/gitignore).
 
 ## Installation
 ```bash
-go install github.com/StevenCyb/ServMock@latest
+go install github.com/StevenCyb/GitIgnoreGen@latest
 ```
 
 ## Usage
