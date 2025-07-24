@@ -14,12 +14,13 @@ const templateURL = "https://github.com/StevenCyb/GitIgnoreGen/tree/main/templat
 
 func main() {
 	args := os.Args
-	c := cli.New(
+	var c *cli.CLI
+	c = cli.New(
 		cli.Name("GitignoreGen"),
 		cli.Banner(`╔═╗┬┌┬┐┬┌─┐┌┐┌┌─┐┬─┐┌─┐╔═╗┌─┐┌┐┌
 ║ ╦│ │ ││ ┬││││ │├┬┘├┤ ║ ╦├┤ │││
 ╚═╝┴ ┴ ┴└─┘┘└┘└─┘┴└─└─┘╚═╝└─┘┘└┘`),
-		cli.Description("A CLI tool to generate .gitignore files for various cases."),
+		cli.Description("A CLI tool to generate .gitignore for various cases."),
 		cli.Version("1.0.0"),
 		cli.Command("list",
 			cli.Description("List available .gitignore templates."),
@@ -29,7 +30,7 @@ func main() {
 		cli.Command(
 			"build",
 			cli.Description("Build a .gitignore file in the current working directory."),
-			cli.Example("cli build golang macos"),
+			cli.Example("cli build golang macos ..."),
 			cli.Handler(handler.BuildHandler(templateURL, timeout, args)),
 		),
 		cli.Command(
@@ -40,13 +41,23 @@ func main() {
 		),
 		cli.Command(
 			"version",
-			cli.Description("Get the version of the CLI"),
+			cli.Description("Get the version of the CLI."),
 			cli.Example("cli version"),
 			cli.Handler(
 				func(_ *cli.Context) error {
 					fmt.Println("1.0.0")
 					return nil
 				},
+			),
+		),
+		cli.Command(
+			"help",
+			cli.Description("Show help information."),
+			cli.Example("cli help"),
+			cli.Handler(func(_ *cli.Context) error {
+				c.PrintHelp()
+				return nil
+			},
 			),
 		),
 	)
