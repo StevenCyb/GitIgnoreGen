@@ -10,13 +10,8 @@ import (
 	"github.com/StevenCyb/GoCLI/pkg/cli"
 )
 
-func ListHandler(templateURL string, timeout time.Duration) func(*cli.Context) error {
+func ListHandler(client git.IClient, timeout time.Duration) func(*cli.Context) error {
 	return func(_ *cli.Context) error {
-		client, err := git.New(templateURL)
-		if err != nil {
-			return fmt.Errorf("failed to create Git client: %w", err)
-		}
-
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()
 		files, err := client.ListFiles(ctx)
@@ -27,6 +22,7 @@ func ListHandler(templateURL string, timeout time.Duration) func(*cli.Context) e
 		for _, file := range files {
 			fmt.Println("- " + strings.TrimSuffix(file.Name, ".gitignore"))
 		}
+
 		return nil
 	}
 }

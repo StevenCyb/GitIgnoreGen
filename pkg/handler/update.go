@@ -6,12 +6,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/StevenCyb/GitIgnoreGen/pkg/git"
 	"github.com/StevenCyb/GoCLI/pkg/cli"
 )
 
 const sourcePrefix = "# Generated "
 
-func UpdateHandler(templateURL string, timeout time.Duration) func(*cli.Context) error {
+func UpdateHandler(client git.IClient, timeout time.Duration) func(*cli.Context) error {
 	return func(_ *cli.Context) error {
 		currentGitignore, err := os.ReadFile(".gitignore")
 		if err != nil {
@@ -30,6 +31,6 @@ func UpdateHandler(templateURL string, timeout time.Duration) func(*cli.Context)
 			}
 		}
 
-		return BuildHandler(templateURL, timeout, extractedNames)(nil)
+		return BuildHandler(client, timeout, extractedNames)(nil)
 	}
 }

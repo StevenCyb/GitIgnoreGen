@@ -11,14 +11,9 @@ import (
 	"github.com/StevenCyb/GoCLI/pkg/cli"
 )
 
-func BuildHandler(templateURL string, timeout time.Duration, args []string) func(*cli.Context) error {
+func BuildHandler(client git.IClient, timeout time.Duration, args []string) func(*cli.Context) error {
 	return func(_ *cli.Context) error {
 		gitignoreCases := args[2:]
-
-		client, err := git.New(templateURL)
-		if err != nil {
-			return fmt.Errorf("failed to create Git client: %w", err)
-		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()

@@ -12,6 +12,14 @@ import (
 // expectedURLParts is the number of parts we expect in the GitHub subdir URL.
 const expectedURLParts = 5
 
+// IClient defines the interface for interacting with a GitHub repository.
+type IClient interface {
+	// ListFiles lists the files in the specified GitHub repository subdirectory.
+	ListFiles(ctx context.Context) ([]FileMetadata, error)
+	// Download downloads the content of a file from the GitHub repository.
+	Download(ctx context.Context, fileMetadata FileMetadata) (*string, error)
+}
+
 // Client represents a GitHub client for accessing repository contents.
 type Client struct {
 	Owner      string
