@@ -10,7 +10,7 @@ import (
 )
 
 const timeout = time.Duration(5 * time.Second)
-const templateURL = "https://github.com/StevenCyb/test-remove/tree/main/templates"
+const templateURL = "https://github.com/StevenCyb/GitIgnoreGen/tree/main/templates"
 
 func main() {
 	args := os.Args
