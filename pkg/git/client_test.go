@@ -69,7 +69,7 @@ func TestDownloadJSON_Success(t *testing.T) {
 	}
 	client, _ := NewWithClient(newMockClient(resp, nil), "https://github.com/toptal/gitignore.io/tree/master/Localizations")
 	meta := FileMetadata{Name: "foo.json", Type: "file", DownloadURL: "url1"}
-	content, err := client.DownloadJSON(context.Background(), meta)
+	content, err := client.Download(context.Background(), meta)
 	assert.NoError(t, err)
 	assert.Equal(t, "{\"key\":\"value\"}", *content)
 }
@@ -81,7 +81,7 @@ func TestDownloadJSON_HTTPError(t *testing.T) {
 	}
 	client, _ := NewWithClient(newMockClient(resp, nil), "https://github.com/toptal/gitignore.io/tree/master/Localizations")
 	meta := FileMetadata{Name: "foo.json", Type: "file", DownloadURL: "url1"}
-	content, err := client.DownloadJSON(context.Background(), meta)
+	content, err := client.Download(context.Background(), meta)
 	assert.Error(t, err)
 	assert.Nil(t, content)
 }
@@ -89,7 +89,7 @@ func TestDownloadJSON_HTTPError(t *testing.T) {
 func TestDownloadJSON_RequestError(t *testing.T) {
 	client, _ := NewWithClient(newMockClient(nil, errors.New("fail")), "https://github.com/toptal/gitignore.io/tree/master/Localizations")
 	meta := FileMetadata{Name: "foo.json", Type: "file", DownloadURL: "url1"}
-	content, err := client.DownloadJSON(context.Background(), meta)
+	content, err := client.Download(context.Background(), meta)
 	assert.Error(t, err)
 	assert.Nil(t, content)
 }

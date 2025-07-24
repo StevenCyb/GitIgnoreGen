@@ -72,8 +72,8 @@ func (c *Client) ListFiles(ctx context.Context) ([]FileMetadata, error) {
 	return filesMetadata, nil
 }
 
-// DownloadJSON downloads the content of a file as JSON from the GitHub repository.
-func (c *Client) DownloadJSON(ctx context.Context, fileMetadata FileMetadata) (*string, error) {
+// Download downloads the content of a file from the GitHub repository.
+func (c *Client) Download(ctx context.Context, fileMetadata FileMetadata) (*string, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fileMetadata.DownloadURL, nil)
 	if err != nil {
 		return nil, err
