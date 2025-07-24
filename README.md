@@ -3,6 +3,8 @@
 This CLI tool generates .gitignore for various cases. This is a fun project to help developers quickly set up their projects with the appropriate ignore files.
 Feel free to contribute or suggest improvements!
 
+Also check out the [gitignore.io](https://www.toptal.com/developers/gitignore).
+
 ## Installation
 ```bash
 go install github.com/StevenCyb/ServMock@latest
