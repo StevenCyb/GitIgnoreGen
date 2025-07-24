@@ -25,12 +25,16 @@ func newMockClient(resp *http.Response, err error) *http.Client {
 }
 
 func TestNewWithClient_InvalidURL(t *testing.T) {
+	t.Parallel()
+
 	c, err := NewWithClient(http.DefaultClient, "https://github.com/toptal/gitignore.io/master/Localizations")
 	assert.Nil(t, c)
 	assert.Error(t, err)
 }
 
 func TestListFiles_Success(t *testing.T) {
+	t.Parallel()
+
 	jsonResp := `[{"name":"foo.json","type":"file","download_url":"url1"},{"name":"bar.txt","type":"file","download_url":"url2"}]`
 	resp := &http.Response{
 		StatusCode: http.StatusOK,
@@ -45,6 +49,8 @@ func TestListFiles_Success(t *testing.T) {
 }
 
 func TestListFiles_HTTPError(t *testing.T) {
+	t.Parallel()
+
 	resp := &http.Response{
 		StatusCode: http.StatusInternalServerError,
 		Body:       io.NopCloser(bytes.NewBufferString("")),
@@ -56,6 +62,8 @@ func TestListFiles_HTTPError(t *testing.T) {
 }
 
 func TestListFiles_RequestError(t *testing.T) {
+	t.Parallel()
+
 	client, _ := NewWithClient(newMockClient(nil, errors.New("fail")), "https://github.com/toptal/gitignore.io/tree/master/Localizations")
 	files, err := client.ListFiles(context.Background())
 	assert.Error(t, err)
@@ -63,6 +71,8 @@ func TestListFiles_RequestError(t *testing.T) {
 }
 
 func TestDownloadJSON_Success(t *testing.T) {
+	t.Parallel()
+
 	resp := &http.Response{
 		StatusCode: http.StatusOK,
 		Body:       io.NopCloser(bytes.NewBufferString("{\"key\":\"value\"}")),
@@ -75,6 +85,8 @@ func TestDownloadJSON_Success(t *testing.T) {
 }
 
 func TestDownloadJSON_HTTPError(t *testing.T) {
+	t.Parallel()
+
 	resp := &http.Response{
 		StatusCode: http.StatusNotFound,
 		Body:       io.NopCloser(bytes.NewBufferString("")),
@@ -87,6 +99,8 @@ func TestDownloadJSON_HTTPError(t *testing.T) {
 }
 
 func TestDownloadJSON_RequestError(t *testing.T) {
+	t.Parallel()
+
 	client, _ := NewWithClient(newMockClient(nil, errors.New("fail")), "https://github.com/toptal/gitignore.io/tree/master/Localizations")
 	meta := FileMetadata{Name: "foo.json", Type: "file", DownloadURL: "url1"}
 	content, err := client.Download(context.Background(), meta)
