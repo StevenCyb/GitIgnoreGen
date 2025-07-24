@@ -49,6 +49,7 @@ func BuildHandler(templateURL string, timeout time.Duration, args []string) func
 			}
 		}
 
+		gitignoreFile = strings.TrimSuffix(gitignoreFile, "\n")
 		err = os.WriteFile(".gitignore", []byte(gitignoreFile), 0644)
 		if err != nil {
 			return fmt.Errorf("failed to write .gitignore file: %w", err)
