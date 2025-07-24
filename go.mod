@@ -1,3 +1,4 @@
+// cSpell:disable
 module github.com/StevenCyb/GitIgnoreGen
 
 go 1.24.5
